@@ -1,0 +1,25 @@
+server:
+  port: 8426
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://47.104.205.27:3306/chilx-jw?useSSL=false&useUnicode=true&characterEncoding=utf-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Root123456!
+    hikari:
+      connection-timeout: 60000
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        # \u5168\u5C40\u6DFB\u52A0\u5F15\u53F7 \u8BBE\u7F6E\u4E3Atrue\u8BBE\u7F6E\u9ED8\u8BA4\u503C\u5EFA\u8868\u5931\u8D25
+        globally_quoted_identifiers: false
+        enable_lazy_load_no_trans: true
+        temp:
+          use_jdbc_metadata_defaults: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
