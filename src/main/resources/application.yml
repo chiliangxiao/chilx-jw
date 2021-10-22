@@ -9,17 +9,32 @@ spring:
     password: Root123456!
     hikari:
       connection-timeout: 60000
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
-        # \u5168\u5C40\u6DFB\u52A0\u5F15\u53F7 \u8BBE\u7F6E\u4E3Atrue\u8BBE\u7F6E\u9ED8\u8BA4\u503C\u5EFA\u8868\u5931\u8D25
-        globally_quoted_identifiers: false
-        enable_lazy_load_no_trans: true
-        temp:
-          use_jdbc_metadata_defaults: false
     show-sql: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
+
+
+#==============================mybatis驼峰式类名自动映射数据库字段=============================
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    # 新增返回主键
+    use-generated-keys: true
+  type-aliases-package: com.gpos.entity.pg
+  mapper-locations: classpath*:com/gpos/dao/**/*.xml
+
+
+mapper:
+  mappers:
+    - com.chilx.jw.common.base.mybatis.BaseInfoMapper
+  not-empty: false
+
+pagehelper:
+  helperDialect: mysql
+  # 分页合理化参数，默认值为false。
+  # 当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。
+  # 默认false 时，直接根据参数进行查询
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+#==============Mybatis 配置结束==========================================
+

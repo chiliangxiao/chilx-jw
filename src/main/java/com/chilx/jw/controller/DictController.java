@@ -1,13 +1,14 @@
 package com.chilx.jw.controller;
 
 import com.chilx.jw.common.base.ResultData;
-import com.chilx.jw.entity.sys.SysDictTypeEntity;
-import com.chilx.jw.repository.sys.DictTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chilx.jw.dao.sys.DictItemMapper;
+import com.chilx.jw.entity.sys.SysDictItemEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author chilx
@@ -16,16 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dict")
 public class DictController {
-
-
-    @Autowired
-    DictTypeRepository repository;
-
+    @Resource
+    DictItemMapper dictItemMapper;
 
     @GetMapping("/type/detail/{id}")
     public ResultData dictDetail(@PathVariable("id") Integer id) {
-        SysDictTypeEntity dictType = repository.getById(id);
-        return ResultData.ok(dictType);
+
+        SysDictItemEntity sysDictItemEntity = dictItemMapper.selectByPrimaryKey(1);
+
+        return ResultData.ok(sysDictItemEntity);
     }
 
 }

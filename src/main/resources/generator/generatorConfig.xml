@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "mybatis-generator-config_1_0.dtd" >
+
+<generatorConfiguration>
+    <!-- 引入配置文件 -->
+    <properties resource="generator/generatorConfig.properties"/>
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.chilx.jw.common.base.mybatis.BaseInfoMapper"/>
+        </plugin>
+
+        <!-- 注释产生配置 -->
+        <commentGenerator>
+            <property name="javaFileEncoding" value="UTF-8"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库配置 -->
+        <jdbcConnection driverClass="${druid.driver-class}"
+                        connectionURL="${druid.url}"
+                        userId="${druid.username}"
+                        password="${druid.password}">
+        </jdbcConnection>
+        <!-- java类型处理器用于处理DB中的类型到Java中的类型，默认使用JavaTypeResolverDefaultImpl；注意一点，默认会先尝试使用Integer，Long，Short等来对应DECIMAL和 NUMERIC数据类型；-->
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <!--
+                true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
+                false：默认,
+                scale>0;length>18：使用BigDecimal;
+                scale=0;length[10,18]：使用Long；
+                scale=0;length[5,9]：使用Integer；
+                scale=0;length<5：使用Short；
+             -->
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!-- 生成Model对象路径配置 -->
+        <!--         <javaModelGenerator targetPackage="com.tark.rbp.bean" targetProject="../sds-dao/src/main/java"> -->
+        <javaModelGenerator targetPackage="com.chilx.jw.entity" targetProject="${mybatis.generate.path}">
+            <!--  for MyBatis3/MyBatis3Simple自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setter；-->
+            <property name="constructorBased" value="false"/>
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- for MyBatis3 / MyBatis3Simple是否创建一个不可变的类，如果为true，那么MBG会创建一个没有setter方法的类，取而代之的是类似constructorBased的类-->
+            <property name="immutable" value="false"/>
+            <!-- 设置一个根对象，
+                	如果设置了这个根对象，那么生成的keyClass或者recordClass会继承这个类；在Table的rootClass属性中可以覆盖该选项
+                	注意：如果在key class或者record class中有root class相同的属性，MBG就不会重新生成这些属性了，包括：
+                	1，属性名相同，类型相同，有相同的getter/setter方法；-->
+            <!--实体类继承需要继承的类-->
+<!--            <property name="rootClass" value="com.gpos.dao.entity.BaseEntity"/>-->
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成sqlXML文件路径配置 -->
+        <!--         <sqlMapGenerator targetPackage="com.tark.rbp.mapping" targetProject="../sds-dao/src/main/java"/> -->
+        <sqlMapGenerator targetPackage="com.chilx.jw.dao.mapper" targetProject="${mybatis.generate.path}"/>
+
+        <!-- 生成DAO的类文件路径配置 -->
+        <!--         <javaClientGenerator targetPackage="com.tark.rbp.dao" targetProject="../sds-dao/src/main/java" type="XMLMAPPER"/> -->
+        <javaClientGenerator targetPackage="com.chilx.jw.dao" targetProject="${mybatis.generate.path}" type="XMLMAPPER">
+            <property name="rootClass" value="com.chilx.jw.common.base.mybatis.BaseInfoMapper"/>
+        </javaClientGenerator>
+
+        <!--         添加要生成的表  -->
+        <!--全部表-->
+<!--        <table tableName="%" domainObjectName="" schema="public">  </table>-->
+        <table tableName="alarm" domainObjectName="AlarmEntity" schema="public">  </table>
+        <table tableName="" domainObjectName="" schema="public">  </table>
+
+        <!--  <table tableName="material" domainObjectName="">
+            <ignoreColumn column="id"/>
+             <ignoreColumn column="create_time"/>
+             <ignoreColumn column="create_user"/>
+             <ignoreColumn column="update_time"/>
+             <ignoreColumn column="update_user"/>
+         </table> -->
+
+     </context>
+ </generatorConfiguration>
